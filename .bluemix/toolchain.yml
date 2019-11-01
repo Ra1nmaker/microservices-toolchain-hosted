@@ -55,7 +55,7 @@ services:
           $text: pipeline.yml
         env:
           GIT_REPO: productpage-repo
-          APP_NAME: '{{form.pipeline.parameters.productpage-app-name}}'
+          APP_NAME: '{{form.pipeline.parameters.app1-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
@@ -90,7 +90,7 @@ services:
           $text: pipeline.yml
         env:
           GIT_REPO: ratings-repo
-          APP_NAME: '{{form.pipeline.parameters.ratings-app-name}}'
+          APP_NAME: '{{form.pipeline.parameters.app2-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
@@ -125,7 +125,7 @@ services:
           $text: pipeline.yml
         env:
           GIT_REPO: details-repo
-          APP_NAME: '{{form.pipeline.parameters.details-app-name}}'
+          APP_NAME: '{{form.pipeline.parameters.app3-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
           REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
           API_KEY: '{{form.pipeline.parameters.api-key}}'
@@ -139,9 +139,9 @@ services:
 form:
   pipeline:
     parameters:
-      productpage-app-name: '{{services.productpage-repo.parameters.repo_name}}'
-      ratings-app-name: '{{services.ratings-repo.parameters.repo_name}}'
-      details-app-name: '{{services.details-repo.parameters.repo_name}}'
+      app1-name: '{{services.productpage-repo.parameters.repo_name}}'
+      app2-name: '{{services.ratings-repo.parameters.repo_name}}'
+      app3-name: '{{services.details-repo.parameters.repo_name}}'
       prod-cluster-namespace: prod
     schema:
       $ref: deploy.json
