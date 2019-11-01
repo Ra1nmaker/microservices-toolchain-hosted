@@ -116,21 +116,21 @@
             "type": "text",
             "readonly": false,
             "title": {
-                "$ref": "#/messages/deploy.appName"
+                "$ref": "#/messages/deploy.app1-appName"
             },
             "key": "app1-name"
         }, {
             "type": "text",
             "readonly": false,
             "title": {
-                "$ref": "#/messages/deploy.appName"
+                "$ref": "#/messages/deploy.app2-appName"
             },
             "key": "app2-name"
         }, {
             "type": "text",
             "readonly": false,
             "title": {
-                "$ref": "#/messages/deploy.appName"
+                "$ref": "#/messages/deploy.app3-appName"
             },
             "key": "app3-name"
         }, {
