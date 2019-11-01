@@ -86,7 +86,21 @@
             "type": "string",
             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
         },
-        "app-name": {
+        "productpage-app-name": {
+            "description": {
+                "$ref": "#/messages/deploy.appDescription"
+            },
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "ratings-app-name": {
+            "description": {
+                "$ref": "#/messages/deploy.appDescription"
+            },
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "details-app-name": {
             "description": {
                 "$ref": "#/messages/deploy.appDescription"
             },
@@ -94,7 +108,7 @@
             "pattern": "\\S"
         }
     },
-    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
+    "required": ["productpage-app-name", "ratings-app-name", "details-app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-resource-group", "prod-cluster-name", "prod-cluster-namespace"],
     "form": [{
             "type": "validator",
             "url": "/devops/validator/validator-v1.html"
@@ -104,7 +118,21 @@
             "title": {
                 "$ref": "#/messages/deploy.appName"
             },
-            "key": "app-name"
+            "key": "productpage-app-name"
+        }, {
+            "type": "text",
+            "readonly": false,
+            "title": {
+                "$ref": "#/messages/deploy.appName"
+            },
+            "key": "ratings-app-name"
+        }, {
+            "type": "text",
+            "readonly": false,
+            "title": {
+                "$ref": "#/messages/deploy.appName"
+            },
+            "key": "details-app-name"
         }, {
             "type": "password",
             "readonly": false,
