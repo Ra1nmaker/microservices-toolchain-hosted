@@ -84,21 +84,21 @@ stages:
   triggers:
   - type: stage
   jobs:
-  - name: Check dockerfile
-    type: tester
-    script: |-
-      #!/bin/bash
-      # uncomment to debug the script
-      # set -x
-      # copy the script below into your app code repo (e.g. ./scripts/check_dockerfile.sh) and 'source' it from your pipeline job
-      #    source ./scripts/check_prebuild.sh
-      # alternatively, you can source it from online script:
-      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
-      # ------------------
-      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh
-
-      # This script lints Dockerfile.
-      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
+#  - name: Check dockerfile
+#    type: tester
+#    script: |-
+#      #!/bin/bash
+#      # uncomment to debug the script
+#      # set -x
+#      # copy the script below into your app code repo (e.g. ./scripts/check_dockerfile.sh) and 'source' it from your pipeline job
+#      #    source ./scripts/check_prebuild.sh
+#      # alternatively, you can source it from online script:
+#      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
+#      # ------------------
+#      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh
+#
+#      # This script lints Dockerfile.
+#      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
   - name: Check registry
     type: builder
     build_type: cr
@@ -182,12 +182,15 @@ stages:
   - name: DEPLOYMENT_FILE
     value: kubernetes/deployment.yaml
     type: text
-  - name: CACHE_DEPLOYMENT_FILE
-    value: kubernetes/redis-deployment.yaml
-    type: text
   - name: APP_URL
     value: undefined
     type: text  
+  - name: VS_FILE
+    value: kubernetes/virtualService.yaml
+    type: text
+  - name: SVC_FILE
+    value: kubernetes/service.yaml
+    type: text
   jobs:
   - name: Deploy to Kubernetes
     type: deployer
@@ -208,10 +211,18 @@ stages:
 
       # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
       # image registry (using an IBM Cloud API Key), perform a kubectl deploy of container image and check on outcome.
-      sed -i "s/__NAMESPACE__/${CLUSTER_NAMESPACE}/g" ${DEPLOYMENT_FILE}
-      sed -i "s#__IMAGENAME__#${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}#g" ${DEPLOYMENT_FILE}
-      kubectl apply -f ${CACHE_DEPLOYMENT_FILE} -n ${CLUSTER_NAMESPACE}
+      #cd kubernetes
+      #if [ ${GATEWAY_FILE} ] ;then
+      #  cat ${GATEWAY_FILE} | yq write -d0 - "metadata.name" "${CLUSTER_NAMESPACE}-bookinfo" | yq write -d0 - "spec.servers[0].hosts[0]" "${CLUSTER_NAMESPACE}.162-133-84-98.nip.io" | kubectl apply -n ${CLUSTER_NAMESPACE} -f -
+      #fi
+      
+      if [ ${VS_FILE} ] ;then
+        sed -i "s/NAMESPACE/${CLUSTER_NAMESPACE}/g" ${VS_FILE}
+        #cat ${VS_FILE} | yq write -d0 - "metadata.name" "${CLUSTER_NAMESPACE}-bookinfo" | yq write -d0 - "spec.hosts[0]" "${CLUSTER_NAMESPACE}.162-133-84-98.nip.io" | yq write -d0 - "spec.gateways[0]" "${CLUSTER_NAMESPACE}-gateway" | kubectl apply -n ${CLUSTER_NAMESPACE} -f -
+        kubectl apply -n ${CLUSTER_NAMESPACE} -f ${VS_FILE}
+      fi
       source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_kubectl.sh")
+      kubectl apply -n ${CLUSTER_NAMESPACE} -f ${SVC_FILE}
   - name: Check health
     type: deployer
     target:
