@@ -86,21 +86,21 @@
             "type": "string",
             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
         },
-        "productpage-app-name": {
+        "app1-name": {
             "description": {
                 "$ref": "#/messages/deploy.appDescription"
             },
             "type": "string",
             "pattern": "\\S"
         },
-        "ratings-app-name": {
+        "app2-name": {
             "description": {
                 "$ref": "#/messages/deploy.appDescription"
             },
             "type": "string",
             "pattern": "\\S"
         },
-        "details-app-name": {
+        "app3-name": {
             "description": {
                 "$ref": "#/messages/deploy.appDescription"
             },
@@ -118,21 +118,21 @@
             "title": {
                 "$ref": "#/messages/deploy.appName"
             },
-            "key": "productpage-app-name"
+            "key": "app1-name"
         }, {
             "type": "text",
             "readonly": false,
             "title": {
                 "$ref": "#/messages/deploy.appName"
             },
-            "key": "ratings-app-name"
+            "key": "app2-name"
         }, {
             "type": "text",
             "readonly": false,
             "title": {
                 "$ref": "#/messages/deploy.appName"
             },
-            "key": "details-app-name"
+            "key": "app3-name"
         }, {
             "type": "password",
             "readonly": false,
