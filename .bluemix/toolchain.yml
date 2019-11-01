@@ -114,7 +114,7 @@ services:
       has_issues: true
       enable_traceability: true
   details-build:
-    service_id: pipeline-1
+    service_id: pipeline
     parameters:
       services:
         - details-repo
@@ -139,7 +139,9 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: '{{services.repo.parameters.repo_name}}'
+      productpage-app-name: '{{services.productpage-repo.parameters.repo_name}}'
+      ratings-app-name: '{{services.ratings-repo.parameters.repo_name}}'
+      details-app-name: '{{services.details-repo.parameters.repo_name}}'
       prod-cluster-namespace: prod
     schema:
       $ref: deploy.json
