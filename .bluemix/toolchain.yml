@@ -44,7 +44,7 @@ services:
       has_issues: true
       enable_traceability: true
   productpage-build:
-    service_id: productpage-pipeline
+    service_id: pipeline
     parameters:
       services:
         - productpage-repo
@@ -79,7 +79,7 @@ services:
       has_issues: true
       enable_traceability: true
   ratings-build:
-    service_id: ratings-pipeline
+    service_id: pipeline
     parameters:
       services:
         - ratings-repo
@@ -114,7 +114,7 @@ services:
       has_issues: true
       enable_traceability: true
   details-build:
-    service_id: details-pipeline
+    service_id: pipeline
     parameters:
       services:
         - details-repo
