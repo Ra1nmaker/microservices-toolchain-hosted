@@ -114,7 +114,7 @@ services:
       has_issues: true
       enable_traceability: true
   details-build:
-    service_id: pipeline
+    service_id: pipeline-1
     parameters:
       services:
         - details-repo
