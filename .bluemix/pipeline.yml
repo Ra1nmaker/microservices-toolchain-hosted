@@ -221,8 +221,12 @@ stages:
         #cat ${VS_FILE} | yq write -d0 - "metadata.name" "${CLUSTER_NAMESPACE}-bookinfo" | yq write -d0 - "spec.hosts[0]" "${CLUSTER_NAMESPACE}.162-133-84-98.nip.io" | yq write -d0 - "spec.gateways[0]" "${CLUSTER_NAMESPACE}-gateway" | kubectl apply -n ${CLUSTER_NAMESPACE} -f -
         kubectl apply -n ${CLUSTER_NAMESPACE} -f ${VS_FILE}
       fi
+      
+      if [ ${VS_FILE} ] ;then
+        kubectl apply -n ${CLUSTER_NAMESPACE} -f ${SVC_FILE}
+      fi
+      
       source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_kubectl.sh")
-      kubectl apply -n ${CLUSTER_NAMESPACE} -f ${SVC_FILE}
   - name: Check health
     type: deployer
     target:
